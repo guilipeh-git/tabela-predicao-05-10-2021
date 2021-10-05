@@ -22,6 +22,19 @@
                 <h2>Previsao Energia</h2>
                 <span>Tabela 1.0</span>
             </div>
+
+            <div id="msgFull">
+                <div id="mensagem">
+                    <div class="msgHeader">
+
+                        <h3>Mensagem</h3>
+                        <h2 onclick="tabela.fechaMensagem()">X</h2>
+                    </div>
+                    
+                    <p id="P_mensagem">
+                    </p>
+                </div>
+            </div>
             <div class="main">
                 
                 <div class="div_group">
@@ -30,17 +43,7 @@
                         <input class="input" type="text" id="linha">
                     </div>
 
-
-                    <div id="mensagem">
-                        <div class="msgHeader">
-
-                            <h3>Mensagem</h3>
-                            <h2 onclick="tabela.fechaMensagem()">X</h2>
-                        </div>
-                        
-                        <p id="P_mensagem">
-                        </p>
-                    </div>
+                    
 
 
                         
@@ -89,9 +92,9 @@
                     
                 </div>  
             </div>
-            <div id="btn" style="margin-top: 30px;">
-                <input type="submit" id="adicionar" value="Adicionar" onclick="tabela.adicionar()">
-                <input type="submit" id="cancelar" value="Cancelar" id="cancelar" onclick="tabela.cancelar()">
+            <div id="btn" style="margin-top: 30px; display: flex;">
+                <input type="submit" id="adicionar" value="adicionar" onclick="tabela.adicionar()">
+                <input type="submit" id="cancelar" value="cancelar" id="cancelar" onclick="tabela.cancelar()">
             </div> 
             
             <table border=1>
@@ -330,6 +333,9 @@
             }
             editarLista(id_f){
                 alert('Modo edição')
+                document.querySelector('.main').style.display = 'block';
+                document.querySelector("#adicionar").style.display = "block";
+                document.querySelector('#cancelar').style.display = "block";
                 const adicionar = document.getElementById('adicionar');
                 adicionar.value = 'Atualizar';
                 for(let i=0 ;i<this.arrayLista.length;i++){
@@ -386,7 +392,11 @@
             }
             
             atualizar(){
-                
+                document.querySelector('.main').style.display = 'none';
+                document.querySelector("#adicionar").style.display = "none";
+                document.querySelector('#cancelar').style.display = "none";
+
+
                 for(let i=0;i<this.arrayLista.length;i++){
                     if(this.arrayLista[i].id == this.mudaBtn){
                         this.arrayLista[i].status = this.lerDados().status
@@ -414,6 +424,11 @@
                 
             }
             cancelar(){
+                document.querySelector('.main').style.display = 'none';
+                document.querySelector("#adicionar").style.display = "none";
+                document.querySelector('#cancelar').style.display = "none";
+
+                
                 this.limpaCamposInput();
                 for(let i=0;i<7;i++){
                     let ipt = document.querySelectorAll('input')[i];
@@ -438,14 +453,19 @@
             
             msg(msg){
                     if(msg.length != 0){
-                        document.querySelector('#mensagem').style.display = "block"
-                        document.querySelector('#mensagem p ').innerHTML = msg
+                        document.querySelector('#mensagem').style.display = "block";
+                        document.querySelector('#mensagem p ').innerHTML = msg;
+                        document.querySelector('#msgFull').style.display = "flex";
+                    
+                    
                     }
                        
             
             }
             fechaMensagem(){
                 document.querySelector('#mensagem').style.display = 'none';
+                document.querySelector('#msgFull').style.display = "none";
+            
             }
 
            
