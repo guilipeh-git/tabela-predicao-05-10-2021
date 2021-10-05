@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/stylee.css">
+    <link rel="stylesheet" href="script.js">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ephesis&display=swap" rel="stylesheet">
+    <title>Preditiva</title>
+</head>
+<body style='background-image:url("https://i.pinimg.com/originals/cb/c0/c9/cbc0c99547599552535c2a9e7ebc00b1.jpg")'>
+<!--form action=""-->
+    <header>
+        <h1>Preditiva de Energia</h1>
+    </header>
+        <section>
+            <span>.</span>
+            <div class='titulo'>
+                <h2>Previsao Energia</h2>
+                <span>Tabela 1.0</span>
+            </div>
+            <div class="main">
+                
+                <div class="div_group">
+                    <div class="inputs">
+                        <label>Linha</label>
+                        <input class="input" type="text" id="linha">
+                    </div>
+
+
+                    <div id="mensagem">
+                        <div class="msgHeader">
+
+                            <h3>Mensagem</h3>
+                            <h2 onclick="tabela.fechaMensagem()">X</h2>
+                        </div>
+                        
+                        <p id="P_mensagem">
+                        </p>
+                    </div>
+
+
+                        
+                    <div class="inputs">
+                        <label>Área</label>
+                        <input class="input" type="text" id="area">
+                    </div>
+                    <div class="inputs">
+                        <label>Anomalia</label>
+                        <input class="input" type="text" id="anomalia">
+                    </div>
+                    <div class="inputs">
+                        <label>Hora</label>
+                        <input class="input" type="text" id="hora">
+                    </div>
+                    <div class="inputs">
+                        <label>Motor</label>
+                        <input class="input" type="text" id="motor">
+                    </div>
+                    
+                    <div class="inputs">
+                        <label>Reincidência</label>
+                        <input class="input" type="text" id="reincidencia">
+                    </div>
+                    <div class="inputs">
+                        <label>N° da Ordem</label>
+                        <input class="input" type="text" id="numOrdem">
+                    </div>
+                    <div class="inputs">
+                        <label for="status">Status</label>
+                            <select name="selecao" id="status">
+                                <option value="pendente">Pendente</option>
+                                <option value="planejado">Planejando</option>
+                                <option value="concluido">Concluido</option>
+                            </select>
+                    </div>
+                </div>
+            <div class="div_group2" style="display: flex;">
+                <div style="display: grid; width: 96.5%;">
+                    <label>Comentário</label>
+                    <textarea  class="input_coment" cols="3" rows="1" placeholder="Opcional..." id="comentario"></textarea>
+                    
+                </div>
+
+                    
+                    
+                </div>  
+            </div>
+            <div id="btn" style="margin-top: 30px;">
+                <input type="submit" id="adicionar" value="Adicionar" onclick="tabela.adicionar()">
+                <input type="submit" id="cancelar" value="Cancelar" id="cancelar" onclick="tabela.cancelar()">
+            </div> 
+            
+            <table border=1>
+                <thead id="cabeca">
+                    <th>Linha</th>
+                    <th>Área</th>
+                    <th>Anomalia</th>
+                    <th>Hora</th>
+                    <th>Motor</th>
+                    <th>Reincidência</th>
+                    <th>N° da Ordem</th>
+                    <th>Status</th>
+                    <th>Comentário</th>
+                    <th class="center">Ação</th>
+
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </section>
+        
+            <footer>
+                <p>🍺</p>
+                <p>&copy Ambev</p>
+            </footer>
+        
+   <script>
+       class Tabela{
+
+            constructor(){
+                
+                this.mudaBtn = null;
+                this.arrayLista = [{id:0,linha:501,area:'gui',anomalia:4,hora:12,motor:561,reincidencia:'trepidacao',numOrdem:25,status:'pendente',comentario:'funcionou'},
+                {id:7,linha:501,area:'gui',anomalia:4,hora:12,motor:561,reincidencia:'trepidacao',numOrdem:25,status:'pendente',comentario:'funcionou'},
+                {id:1,linha:501,area:'gui',anomalia:4,hora:12,motor:561,reincidencia:'trepidacao',numOrdem:25,status:'pendente',comentario:'funcionou'}]
+
+                this.criaLinhaColuna()
+                
+                
+                this.tabelaFull = [];
+                
+                
+                
+            }
+
+            criaLinhaColuna(){
+               /*cria as linhas e colunas e mostra na tela*/
+
+                const tbody = document.querySelector('tbody');
+                const arrayL = this.arrayLista; 
+                
+                let msgComentario = "";
+                
+        
+                
+                for(let i=0;i<this.arrayLista.length;i++){
+                    
+                    const tr = tbody.insertRow(); 
+
+                    const td_linha = tr.insertCell(); 
+                    const td_area = tr.insertCell();
+                    const td_anomalia = tr.insertCell();
+                    const td_hora = tr.insertCell();
+                    const td_motor = tr.insertCell();
+                    const td_reincidencia = tr.insertCell();
+                    const td_numOrdem = tr.insertCell();
+                    const td_status = tr.insertCell();
+                    const td_comentario = tr.insertCell();
+                    const td_acao = tr.insertCell();
+
+
+                    
+                    td_linha.innerHTML = arrayL[i].linha;
+                    td_area.innerHTML = arrayL[i].area;
+                    td_anomalia.innerHTML = arrayL[i].anomalia;
+                    td_hora.innerHTML = arrayL[i].hora;
+                    td_motor.innerHTML = arrayL[i].motor; 
+                    td_reincidencia.innerHTML = arrayL[i].reincidencia;
+                    td_numOrdem.innerHTML = arrayL[i].numOrdem;
+                    td_status.innerHTML = arrayL[i].status;
+
+
+                    
+                    arrayL[i].comentario  == ""?msgComentario = "Espaço vazio!":msgComentario = "Ver mensagem !!!";
+                    
+
+                    
+                    td_comentario.innerHTML = msgComentario;
+                    td_comentario.setAttribute('onclick',`tabela.msg('${arrayL[i].comentario}')`)
+                    
+                    
+
+                    const acaoEditar = document.createElement('p');
+                    const acaoDel = document.createElement('p');
+
+                    acaoEditar.setAttribute("onclick","tabela.editarLista("+JSON.stringify(arrayL[i])+")")
+                    acaoDel.setAttribute('onclick',"tabela.deletarLista("+arrayL[i].id+")")
+
+                    const acaoedit = acaoEditar.innerHTML = "<a>✏️</a>";
+                    const acaoDelet = acaoDel.innerHTML = "<a>🗑️</a>"
+
+                    td_acao.setAttribute('id','acao');
+                    td_acao.appendChild(acaoEditar);
+
+                    td_acao.appendChild(acaoDel)
+                    
+                    
+            
+
+
+                }
+
+                
+                }
+            status(){
+                const statusInput = document.querySelector('#status').value;
+                let statusInp;
+                switch(statusInput){
+                    case 'pendente': statusInp = "pendente";
+                    break;
+                    case 'planejado': statusInp = "planejado";
+                    break;
+                    case 'concluido': statusInp = "concluido";
+                    break;
+                }
+             return statusInp;       
+            }
+            lerDados(){
+                const linhaInput = document.querySelector('#linha').value; 
+                const areaInput = document.querySelector('#area').value;
+                const anomaliaInput = document.querySelector('#anomalia').value;
+                const horaInput = document.querySelector('#hora').value;
+                const motorInput = document.querySelector('#motor').value;
+                const reincidenciaInput = document.querySelector('#reincidencia').value;
+                const numOrdemInput = document.querySelector('#numOrdem').value
+
+                const statusInput = document.querySelector('#status').value;
+                
+                
+                
+
+                const comentarioInput = document.querySelector('#comentario').value;
+                let inputs = {id:this.idExiste(),linha:linhaInput,area:areaInput,anomalia:anomaliaInput
+                ,hora:horaInput,motor:motorInput,reincidencia:reincidenciaInput,numOrdem:numOrdemInput,
+                status:this.status(),comentario:comentarioInput};
+                
+                return inputs;
+            
+            }
+            idExiste(){
+                let id = 0;
+                let listaId = [];
+                for(let n = 0; n<this.arrayLista.length;n++){
+                    listaId[n] = this.arrayLista[n].id;
+                }
+                
+                for(let i=0;i<this.arrayLista.length; i++){
+                    listaId.sort();
+                    if(listaId[i] == id){
+                        id++;
+                    }
+                }
+                
+                return id;
+            }
+            adicionar(){
+                
+                
+                this.lerDados();
+                
+                if(this.validaCampos().length==0){
+                    if(this.mudaBtn == null){
+                
+                    
+                    this.arrayLista[this.arrayLista.length] = this.lerDados();
+                    this.limpaCamposInput();
+
+                    } else{
+                        let atlz = window.confirm('Deseja atualiza a linha da tabela ?')
+                        if(atlz){
+                            this.atualizar()
+                        }
+                        
+                        
+                    }
+                    this.tabelaFull = this.arrayLista.slice();
+                    document.querySelector('tbody').innerText = "";
+                    
+                    
+                    this.criaLinhaColuna();
+                    
+                    
+                }
+            }
+            validaCampos(){
+                let msg = "";
+                let ld = this.lerDados();
+                if(ld.linha == ""){
+                    msg += 'Preencha campo Linha \n';
+                }
+                if(ld.area == ""){
+                    msg += 'Preencha campo Área \n';
+                }
+                
+                if(ld.anomalia == ""){
+                    msg += 'Preencha campo Anomalia \n';
+                }
+                if(ld.hora == ""){
+                    msg += 'preencha campo Hora \n';
+                }
+                if(ld.motor == ""){
+                    msg += "preencha campo Motor \n";
+
+                }
+                if(ld.numOrdem == ""){
+                    msg += "preencha campo N° da Ordem \n";
+                }
+
+                if(msg.length != 0){
+                    alert(msg);
+                }
+                return msg;
+            }
+            
+            limpaCamposInput(){
+                document.querySelector('#linha').value = ""; 
+                document.querySelector('#area').value = "";
+                document.querySelector('#anomalia').value = "";
+                document.querySelector('#hora').value = "";
+                document.querySelector('#motor').value = "";
+                document.querySelector('#reincidencia').value = "";
+                document.querySelector('#numOrdem').value = "";
+                document.querySelector('#status'). value =  "pendente"
+                document.querySelector('#comentario').value = "";
+
+            }
+            editarLista(id_f){
+                alert('Modo edição')
+                const adicionar = document.getElementById('adicionar');
+                adicionar.value = 'Atualizar';
+                for(let i=0 ;i<this.arrayLista.length;i++){
+                    if(this.arrayLista[i].id==id_f.id){
+                        
+                        this.mudaBtn = id_f.id;
+                        
+
+                        let ar = this.arrayLista[i];
+                        document.querySelector('#linha').value = ar.linha; 
+                        document.querySelector('#linha').style.background = "#dad0d0";
+                        
+                        document.querySelector('#area').value = ar.area;
+                        document.querySelector('#area').style.background = "#dad0d0";
+
+                        document.querySelector('#anomalia').value = ar.anomalia;
+    
+                        document.querySelector('#anomalia').style.background = "#dad0d0";
+
+                        document.querySelector('#hora').value = ar.hora;
+                        document.querySelector('#hora').style.background = "#dad0d0";
+
+
+                        document.querySelector('#motor').value = ar.motor;
+                        document.querySelector('#motor').style.background = "#dad0d0";
+
+
+                        document.querySelector('#reincidencia').value = ar.reincidencia;
+                    
+                        document.querySelector('#reincidencia').style.background = "#dad0d0";
+
+                        document.querySelector('#numOrdem').value = ar.numOrdem;
+    
+                        document.querySelector('#numOrdem').style.background = "#dad0d0";
+
+
+                        document.querySelector('#status').value = ar.status;
+
+                        document.querySelector("#comentario").value = ar.comentario;
+
+                        
+                        for(let i=0; i<7;i++){
+                            document.getElementsByClassName('input')[i].setAttribute('readonly','')
+                        }
+
+                    }
+               
+                }
+                
+
+                
+                
+
+            }
+            
+            atualizar(){
+                
+                for(let i=0;i<this.arrayLista.length;i++){
+                    if(this.arrayLista[i].id == this.mudaBtn){
+                        this.arrayLista[i].status = this.lerDados().status
+                        this.arrayLista[i].comentario = this.lerDados().comentario
+                    }
+                    
+                }
+                this.cancelar();
+            }
+            deletarLista(del){
+                console.log(this.tabelaFull);
+                const delet = confirm("Deseja Realmente APAGAR essa linha ? ");
+                if(delet){
+                    for(let n=0; n<this.arrayLista.length; n++){
+                        if(this.arrayLista[n].id == del){
+                            this.arrayLista.splice(n,1);
+                        }
+                    }
+                
+                
+                this.mostraNaTela();
+                }
+                
+                
+                
+            }
+            cancelar(){
+                this.limpaCamposInput();
+                for(let i=0;i<7;i++){
+                    let ipt = document.querySelectorAll('input')[i];
+                    ipt.style.background = '#fff';
+
+                    ipt.removeAttribute('readonly',"");
+                    //////////////////////////////////////////////////////////////deleta atributo 
+
+                }
+                
+                document.querySelector('#adicionar').value = "Adicionar";
+                this.mudaBtn = null;
+
+            }
+            mostraNaTela(){
+                document.querySelector('tbody').innerHTML = "";
+                this.criaLinhaColuna();
+                }
+            
+
+
+            
+            msg(msg){
+                    if(msg.length != 0){
+                        document.querySelector('#mensagem').style.display = "block"
+                        document.querySelector('#mensagem p ').innerHTML = msg
+                    }
+                       
+            
+            }
+            fechaMensagem(){
+                document.querySelector('#mensagem').style.display = 'none';
+            }
+
+           
+            
+            
+            
+        
+        }
+        
+        var tabela = new Tabela();
+
+   </script>
+</form>
+    
+</body>
+</html>
